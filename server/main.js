@@ -52,6 +52,7 @@ app.post('/GetSong', async function(req,res){
     };
 
     //using request information query google api
+    console.log(req.body);
     speechClient
         .recognize(request)
         .then(data => {
@@ -60,6 +61,8 @@ app.post('/GetSong', async function(req,res){
             .map(result => result.alternatives[0].transcript)
             .join('\n');
             console.log(`Transcription: ${transcription}`);
+
+            res.json({});
         })
         .catch(err => {
             console.error('ERROR:', err);
