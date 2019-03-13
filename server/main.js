@@ -22,6 +22,7 @@ app.use(bodyparser.json({limit: '50mb'}));
 //song information
 //get song based on user raw rap audio (returns beat overlayed etc)
 app.post('/GetSong', async function(req,res){
+    console.log(req.body.song);
     const audio = {
         content:  req.body.song //fs.readFileSync("./tests/resources/RecordingMono2.wav").toString("base64"), //base 64 version of the song
     };
@@ -83,20 +84,20 @@ app.post('/GetSong', async function(req,res){
         info.tones = toneAnalysis;
         console.log("\n\nTone Analysis:");
         console.log(toneAnalysis);
-        // var url = 
+
+        // var url = "http://001cfb71.ngrok.io";
         // var options = {
         //     host: url,
-        //     port: 80,
-        //     path: '/resource?id=foo&bar=baz',
+        //     path: '/z',
         //     method: 'POST'
+        //     headers: {
+
+        //     }
         // };
           
-        // http.request(options, function(res) {
-        //     console.log('STATUS: ' + res.statusCode);
-        //     console.log('HEADERS: ' + JSON.stringify(res.headers));
-        //     res.setEncoding('utf8');
+        // http.request(options, function(result) {
         //     res.on('data', function (chunk) {
-        //       console.log('BODY: ' + chunk);
+        //         console.log('BODY: ' + chunk);
         //     });
         // }).end();
 
