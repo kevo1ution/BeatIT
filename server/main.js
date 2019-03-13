@@ -8,6 +8,9 @@ const fs = require('fs');
 const uuid = require('uuid/v4');
 const speech = require('@google-cloud/speech').v1p1beta1;
 const speechClient = new speech.SpeechClient();
+const requests = require('request');
+const cors = require('cors');
+
 
 //get custom modules
 const Tone = require('./modules/tone.js');
@@ -17,6 +20,7 @@ const bpmCalc = require('./modules/bpmCalc.js');
 //express app 
 var app = express();
 app.use(bodyparser.json({limit: '50mb'}));
+app.use(cors({credentials: true, origin: true}));
 
 //setting up endpoints
 //song information
@@ -86,21 +90,16 @@ app.post('/GetSong', async function(req,res){
         console.log("\n\nTone Analysis:");
         console.log(toneAnalysis);
 
-        // var url = "http://001cfb71.ngrok.io";
-        // var options = {
-        //     host: url,
-        //     path: '/z',
-        //     method: 'POST'
-        //     headers: {
+        //create request from requests module
+        // requests.post({
+        //     headers:{
+        //         'content-type': 'application/json'
+        //     },
+        //     url: '',
+        //     form:{
 
         //     }
-        // };
-          
-        // http.request(options, function(result) {
-        //     res.on('data', function (chunk) {
-        //         console.log('BODY: ' + chunk);
-        //     });
-        // }).end();
+        // });
 
         res.json(info);
     });
