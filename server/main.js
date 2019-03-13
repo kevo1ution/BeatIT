@@ -6,6 +6,8 @@ const url = require('url');
 const bodyparser = require('body-parser');
 const fs = require('fs');
 const uuid = require('uuid/v4');
+const speech = require('@google-cloud/speech').v1p1beta1;
+const speechClient = new speech.SpeechClient();
 
 //get custom modules
 const Tone = require('./modules/tone.js');
@@ -16,6 +18,57 @@ var app = express();
 app.use(bodyparser.json({limit: '50mb'}));
 
 //setting up endpoints
+//song information
+//get song based on user raw rap audio (returns beat overlayed etc)
+app.post('/GetSong', async function(req,res){
+    const audio = {
+        content:  req.body.song //fs.readFileSync("./tests/resources/RecordingMono2.wav").toString("base64"), //base 64 version of the song
+    };
+    const config = {
+        encoding: 'LINEAR16',
+        sampleRateHertz: 48000,
+        languageCode: 'en-US',
+        enableWordConfidence: true,
+    };
+    const request = {
+        audio: audio,
+        config: config,
+    };
+
+    //set up result variables
+    var info = {
+        "lyrics": "",
+        "timing": [],
+        "tones": [],
+    };
+
+    //using request information query google api
+    const [response] = await speechClient.recognize(request);
+    const transcription = response.results
+      .map(result => result.alternatives[0].transcript)
+      .join('\n');
+    const confidence = response.results
+      .map(result => result.alternatives[0].confidence)
+      .join(`\n`);
+    console.log(`Transcription: ${transcription} \n Confidence: ${confidence}`);
+    info.lyrics = transcription;
+    
+    console.log(`Word-Level-Confidence:`);
+    const words = response.results.map(result => result.alternatives[0]);
+    words.forEach(word => {
+        word.words.forEach(a => {
+            info.timing.push(a);
+            console.log(` word: ${a.word}, confidence: ${a.confidence}`);
+        });
+    });
+
+    Tone.GetTones(transcription, function(toneAnalysis){
+        info.tones = toneAnalysis;
+        res.json(info);
+    });
+});
+
+
 //get tonal information for lyric text
 app.post('/ToneAnalysis', function(req, res){
     Tone.GetTones(req.body.song, function(toneAnalysis){
@@ -34,7 +87,7 @@ app.post('/addUser', function(req,res){
 });
 
 //editing and saving songs
-app.post('/CreateSong', function(req, res){
+app.post('/song/create', function(req, res){
     const userId = req.body.userId;
     const songText = req.body.songText
     
@@ -42,12 +95,11 @@ app.post('/CreateSong', function(req, res){
     Db.addSong(userId, songText); 
 });
 
-app.post('/EditSong', function(req, res){
+app.post('/song/getWordsAndBeat', function(req, res){
 
 });
 
-app.post('/GetSong', function(req,res){
-    const userId = req.body.userId;
+app.post('/EditSong', function(req, res){
 
 });
 
