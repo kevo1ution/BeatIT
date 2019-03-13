@@ -23,7 +23,7 @@ app.use(bodyparser.json({limit: '50mb'}));
 //get song based on user raw rap audio (returns beat overlayed etc)
 app.post('/GetSong', async function(req,res){
     const audio = {
-        content:  fs.readFileSync("./tests/resources/RecordingMono2.wav").toString("base64"), //base 64 version of the song
+        content:  req.body.song //fs.readFileSync("./tests/resources/RecordingMono2.wav").toString("base64"), //base 64 version of the song
     };
     const config = {
         encoding: 'LINEAR16',
@@ -43,6 +43,7 @@ app.post('/GetSong', async function(req,res){
         "timing": [],
         "tones": [],
         "bpm": 90,
+        "audio": audio
     };
 
     //using request information query google api
@@ -82,6 +83,23 @@ app.post('/GetSong', async function(req,res){
         info.tones = toneAnalysis;
         console.log("\n\nTone Analysis:");
         console.log(toneAnalysis);
+        // var url = 
+        // var options = {
+        //     host: url,
+        //     port: 80,
+        //     path: '/resource?id=foo&bar=baz',
+        //     method: 'POST'
+        // };
+          
+        // http.request(options, function(res) {
+        //     console.log('STATUS: ' + res.statusCode);
+        //     console.log('HEADERS: ' + JSON.stringify(res.headers));
+        //     res.setEncoding('utf8');
+        //     res.on('data', function (chunk) {
+        //       console.log('BODY: ' + chunk);
+        //     });
+        // }).end();
+
         res.json(info);
     });
 });
