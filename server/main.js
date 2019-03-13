@@ -22,6 +22,7 @@ app.use(bodyparser.json({limit: '50mb'}));
 //song information
 //get song based on user raw rap audio (returns beat overlayed etc)
 app.post('/GetSong', async function(req,res){
+    console.log(req.body);
     console.log(req.body.song);
     const audio = {
         content:  req.body.song //fs.readFileSync("./tests/resources/RecordingMono2.wav").toString("base64"), //base 64 version of the song
