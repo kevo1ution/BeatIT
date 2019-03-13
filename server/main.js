@@ -12,6 +12,7 @@ const speechClient = new speech.SpeechClient();
 //get custom modules
 const Tone = require('./modules/tone.js');
 const Db = require('./modules/database.js');
+const bpmCalc = require('./modules/bpmCalc.js');
 
 //express app 
 var app = express();
@@ -22,13 +23,14 @@ app.use(bodyparser.json({limit: '50mb'}));
 //get song based on user raw rap audio (returns beat overlayed etc)
 app.post('/GetSong', async function(req,res){
     const audio = {
-        content:  req.body.song //fs.readFileSync("./tests/resources/RecordingMono2.wav").toString("base64"), //base 64 version of the song
+        content:  fs.readFileSync("./tests/resources/RecordingMono2.wav").toString("base64"), //base 64 version of the song
     };
     const config = {
         encoding: 'LINEAR16',
         sampleRateHertz: 48000,
         languageCode: 'en-US',
         enableWordConfidence: true,
+        enableWordTimeOffsets: true,
     };
     const request = {
         audio: audio,
@@ -40,6 +42,7 @@ app.post('/GetSong', async function(req,res){
         "lyrics": "",
         "timing": [],
         "tones": [],
+        "bpm": 90,
     };
 
     //using request information query google api
@@ -53,17 +56,32 @@ app.post('/GetSong', async function(req,res){
     console.log(`Transcription: ${transcription} \n Confidence: ${confidence}`);
     info.lyrics = transcription;
     
-    console.log(`Word-Level-Confidence:`);
+    console.log(`\n\nWord-Level-Confidence:`);
     const words = response.results.map(result => result.alternatives[0]);
     words.forEach(word => {
         word.words.forEach(a => {
+            const startSecs =
+                `${a.startTime.seconds}` +
+                `.` +
+                a.startTime.nanos / 100000000;
+            const endSecs =
+                `${a.endTime.seconds}` +
+                `.` +
+                a.endTime.nanos / 100000000;            
+            a.startTime = startSecs;
+            a.endTime = endSecs;
             info.timing.push(a);
-            console.log(` word: ${a.word}, confidence: ${a.confidence}`);
+            console.log(a);
         });
     });
 
+    //get bpm
+    info.bpm = bpmCalc.getBPM(info.timing);
+
     Tone.GetTones(transcription, function(toneAnalysis){
         info.tones = toneAnalysis;
+        console.log("\n\nTone Analysis:");
+        console.log(toneAnalysis);
         res.json(info);
     });
 });
