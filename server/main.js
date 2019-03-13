@@ -28,7 +28,7 @@ app.post('/GetSong', async function(req,res){
     //console.log(req.body);
     //console.log(req.body.song);
     const audio = {
-        content:  req.body.song //fs.readFileSync("./tests/resources/RecordingMono2.wav").toString("base64"), //base 64 version of the song
+        content:  fs.readFileSync("./tests/resources/RecordingMono2.wav").toString("base64"), //base 64 version of the song
     };
     const config = {
         encoding: 'LINEAR16',
@@ -52,72 +52,56 @@ app.post('/GetSong', async function(req,res){
     };
 
     //using request information query google api
-    console.log(req.body.song);
-    speechClient
-        .recognize(request)
-        .then(data => {
-            const response = data[0];
-            const transcription = response.results
-            .map(result => result.alternatives[0].transcript)
-            .join('\n');
-            console.log(`Transcription: ${transcription}`);
-
-            res.json({});
-        })
-        .catch(err => {
-            console.error('ERROR:', err);
-        });
-
-
-    // const transcription = response.results
-    //   .map(result => result.alternatives[0].transcript)
-    //   .join('\n');
-    // const confidence = response.results
-    //   .map(result => result.alternatives[0].confidence)
-    //   .join(`\n`);
-    // console.log(`Transcription: ${transcription} \n Confidence: ${confidence}`);
-    // info.lyrics = transcription;
+    const [response] = await speechClient.recognize(request);
+    const transcription = response.results
+      .map(result => result.alternatives[0].transcript)
+      .join('\n');
+    const confidence = response.results
+      .map(result => result.alternatives[0].confidence)
+      .join(`\n`);
+    console.log(`Transcription: ${transcription} \n Confidence: ${confidence}`);
+    info.lyrics = transcription;
     
-    // console.log(`\n\nWord-Level-Confidence:`);
-    // const words = response.results.map(result => result.alternatives[0]);
-    // words.forEach(word => {
-    //     word.words.forEach(a => {
-    //         const startSecs =
-    //             `${a.startTime.seconds}` +
-    //             `.` +
-    //             a.startTime.nanos / 100000000;
-    //         const endSecs =
-    //             `${a.endTime.seconds}` +
-    //             `.` +
-    //             a.endTime.nanos / 100000000;            
-    //         a.startTime = startSecs;
-    //         a.endTime = endSecs;
-    //         info.timing.push(a);
-    //         console.log(a);
-    //     });
-    // });
+    console.log(`\n\nWord-Level-Confidence:`);
+    const words = response.results.map(result => result.alternatives[0]);
+    words.forEach(word => {
+        word.words.forEach(a => {
+            const startSecs =
+                `${a.startTime.seconds}` +
+                `.` +
+                a.startTime.nanos / 100000000;
+            const endSecs =
+                `${a.endTime.seconds}` +
+                `.` +
+                a.endTime.nanos / 100000000;            
+            a.startTime = startSecs;
+            a.endTime = endSecs;
+            info.timing.push(a);
+            console.log(a);
+        });
+    });
 
-    // //get bpm
-    // info.bpm = bpmCalc.getBPM(info.timing);
+    //get bpm
+    info.bpm = bpmCalc.getBPM(info.timing);
 
-    // Tone.GetTones(transcription, function(toneAnalysis){
-    //     info.tones = toneAnalysis;
-    //     console.log("\n\nTone Analysis:");
-    //     console.log(toneAnalysis);
+    Tone.GetTones(transcription, function(toneAnalysis){
+        info.tones = toneAnalysis;
+        console.log("\n\nTone Analysis:");
+        console.log(toneAnalysis);
 
-    //     //create request from requests module
-    //     // requests.post({
-    //     //     headers:{
-    //     //         'content-type': 'application/json'
-    //     //     },
-    //     //     url: '',
-    //     //     form:{
+        //create request from requests module
+        // requests.post({
+        //     headers:{
+        //         'content-type': 'application/json'
+        //     },
+        //     url: '',
+        //     form:{
 
-    //     //     }
-    //     // });
+        //     }
+        // });
 
-    //     res.json(info);
-    // });
+        res.json(info);
+    });
 });
 
 
