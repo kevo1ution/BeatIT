@@ -11,7 +11,6 @@ const speechClient = new speech.SpeechClient();
 const requests = require('request');
 const cors = require('cors');
 
-
 //get custom modules
 const Tone = require('./modules/tone.js');
 const Db = require('./modules/database.js');
@@ -26,8 +25,8 @@ app.use(cors({credentials: true, origin: true}));
 //song information
 //get song based on user raw rap audio (returns beat overlayed etc)
 app.post('/GetSong', async function(req,res){
-    console.log(req.body);
-    console.log(req.body.song);
+    //console.log(req.body);
+    //console.log(req.body.song);
     const audio = {
         content:  req.body.song //fs.readFileSync("./tests/resources/RecordingMono2.wav").toString("base64"), //base 64 version of the song
     };
@@ -53,7 +52,15 @@ app.post('/GetSong', async function(req,res){
     };
 
     //using request information query google api
-    const [response] = await speechClient.recognize(request);
+    const [response] = await speechClient.recognize(request)
+    .then(data => {
+        console.log("success!");
+    })
+    .catch(err => {
+      console.error('ERROR:', err);
+    });
+
+
     const transcription = response.results
       .map(result => result.alternatives[0].transcript)
       .join('\n');
