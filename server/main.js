@@ -52,7 +52,7 @@ app.post('/GetSong', async function(req,res){
     };
 
     //using request information query google api
-    client
+    speechClient
         .recognize(request)
         .then(data => {
             const response = data[0];
