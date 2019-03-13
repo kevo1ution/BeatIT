@@ -52,64 +52,69 @@ app.post('/GetSong', async function(req,res){
     };
 
     //using request information query google api
-    const [response] = await speechClient.recognize(request)
-    .then(data => {
-        console.log("success!");
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
-
-
-    const transcription = response.results
-      .map(result => result.alternatives[0].transcript)
-      .join('\n');
-    const confidence = response.results
-      .map(result => result.alternatives[0].confidence)
-      .join(`\n`);
-    console.log(`Transcription: ${transcription} \n Confidence: ${confidence}`);
-    info.lyrics = transcription;
-    
-    console.log(`\n\nWord-Level-Confidence:`);
-    const words = response.results.map(result => result.alternatives[0]);
-    words.forEach(word => {
-        word.words.forEach(a => {
-            const startSecs =
-                `${a.startTime.seconds}` +
-                `.` +
-                a.startTime.nanos / 100000000;
-            const endSecs =
-                `${a.endTime.seconds}` +
-                `.` +
-                a.endTime.nanos / 100000000;            
-            a.startTime = startSecs;
-            a.endTime = endSecs;
-            info.timing.push(a);
-            console.log(a);
+    client
+        .recognize(request)
+        .then(data => {
+            const response = data[0];
+            const transcription = response.results
+            .map(result => result.alternatives[0].transcript)
+            .join('\n');
+            console.log(`Transcription: ${transcription}`);
+        })
+        .catch(err => {
+            console.error('ERROR:', err);
         });
-    });
 
-    //get bpm
-    info.bpm = bpmCalc.getBPM(info.timing);
 
-    Tone.GetTones(transcription, function(toneAnalysis){
-        info.tones = toneAnalysis;
-        console.log("\n\nTone Analysis:");
-        console.log(toneAnalysis);
+    // const transcription = response.results
+    //   .map(result => result.alternatives[0].transcript)
+    //   .join('\n');
+    // const confidence = response.results
+    //   .map(result => result.alternatives[0].confidence)
+    //   .join(`\n`);
+    // console.log(`Transcription: ${transcription} \n Confidence: ${confidence}`);
+    // info.lyrics = transcription;
+    
+    // console.log(`\n\nWord-Level-Confidence:`);
+    // const words = response.results.map(result => result.alternatives[0]);
+    // words.forEach(word => {
+    //     word.words.forEach(a => {
+    //         const startSecs =
+    //             `${a.startTime.seconds}` +
+    //             `.` +
+    //             a.startTime.nanos / 100000000;
+    //         const endSecs =
+    //             `${a.endTime.seconds}` +
+    //             `.` +
+    //             a.endTime.nanos / 100000000;            
+    //         a.startTime = startSecs;
+    //         a.endTime = endSecs;
+    //         info.timing.push(a);
+    //         console.log(a);
+    //     });
+    // });
 
-        //create request from requests module
-        // requests.post({
-        //     headers:{
-        //         'content-type': 'application/json'
-        //     },
-        //     url: '',
-        //     form:{
+    // //get bpm
+    // info.bpm = bpmCalc.getBPM(info.timing);
 
-        //     }
-        // });
+    // Tone.GetTones(transcription, function(toneAnalysis){
+    //     info.tones = toneAnalysis;
+    //     console.log("\n\nTone Analysis:");
+    //     console.log(toneAnalysis);
 
-        res.json(info);
-    });
+    //     //create request from requests module
+    //     // requests.post({
+    //     //     headers:{
+    //     //         'content-type': 'application/json'
+    //     //     },
+    //     //     url: '',
+    //     //     form:{
+
+    //     //     }
+    //     // });
+
+    //     res.json(info);
+    // });
 });
 
 
