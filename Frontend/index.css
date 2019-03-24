@@ -1,0 +1,180 @@
+html,body{
+  height:100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body{
+  background-image: url("img.png");
+  background-color: #cccccc;
+  background-position: center;
+  font-family: monospace;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+
+
+main, nav, section {
+    display: block;
+    margin: 0 auto;
+}
+
+.container { 
+  padding-top: 50px;
+  margin-top: 50px;
+}
+
+#maincontainer ul{
+  font-family: monospace;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center; 
+  padding-top: 0px;
+  min-width: 600px;
+  position: center;
+  position: static;
+  
+
+}
+
+#maincontainer ul li {
+  display: inline;
+  padding: 5px 20px 5px 20px;
+  color: #2C3E50
+
+}
+
+.anim h1 {
+   overflow: hidden; 
+   border-right: 3px solid #000; 
+   white-space: nowrap;
+   position: center; 
+   margin: 0 auto; 
+   padding-top: 90px;
+   color: white; 
+   animation: typing-text 4s steps(44, end),
+   blink .75s step-end infinite;
+}
+
+.anim {
+  text-align: center;
+  display: inline-block;
+}
+
+@keyframes typing-text{
+  from{
+    width: 0;
+
+  }
+  to{
+    width:19em;
+
+  }
+}
+@keyframes blink {
+  from{
+    border-color: transparent;
+  }
+  to{
+    border-color: white;
+  }
+}
+
+
+a:link{
+  color: white;
+  text-decoration: underline;
+
+  /*top: -100px;*/
+    font-size: 150%;
+    text-align: left;
+    position: relative;
+}
+
+/* visited link */
+a:visited {
+    color: white;
+  /*top: -100px;*/
+    
+    font-size: 150%;
+    text-align: left;
+    position: relative;
+}
+
+/* mouse over link */
+a:hover {
+    color: black;
+    text-decoration: underline;
+
+    /*top: -100px;*/
+    font-size: 150%;
+    text-align: left;
+    position: relative;
+
+}
+/* selected link */
+a:active {
+    color: white;
+    /*top: -100px;*/
+    font-size: 150%;
+    text-align: left;
+    position: relative;
+}
+
+#info{
+  margin-bottom: 30px;
+  text-align: center;
+  color: white;
+  position: center;
+  
+}
+
+p{
+  display: block;
+  font-size: 150%;
+  padding-top: 10px;
+  font-weight: 200;
+  
+
+}
+.a{
+
+a
+  text-decoration: none
+  color: white
+  width: 200px
+  height: 100px
+  background: $pink-hot
+  position: relative
+  margin: 30px
+  top: 100px
+  padding: 16px
+  font-size: 50px
+  border-radius: 10px
+  box-shadow: 0px 15px 0px 0px darken($pink-hot, 5%), 0px 0px 20px 0px #bbb
+
+  transition: all 0.2s
+}
+
+
+.button1{
+  border-radius: 12px;
+  background-color: rgba(0,225,225,.70);
+  border-color: rgba(0,225,225,.70);
+  padding: 3px 40px;
+  font-size: 120%;
+  text-align: center
+  margin-left: auto
+  margin-right: auto
+}
+
+.h2{
+  text-decoration: underline;
+}
+
