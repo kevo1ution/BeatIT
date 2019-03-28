@@ -22,7 +22,7 @@ def create_app(test_config=None):
     from . import analyzeAudio
     app.register_blueprint(analyzeAudio.bp)
 
-    @app.route('/')
+    @app.route('/', methods=['GET', 'POST'])
     @crossdomain(origin='*')
     def hello():
         return 'flaks test server'
