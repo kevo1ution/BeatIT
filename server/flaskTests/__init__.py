@@ -4,6 +4,7 @@ from flask import jsonify
 from flask_cors import CORS
 from flaskTests.decorator import crossdomain
 import json
+import soundfile as sf #delete 
 
 
 
@@ -25,6 +26,12 @@ def create_app(test_config=None):
     @app.route('/', methods=['GET', 'POST'])
     @crossdomain(origin='*')
     def hello():
+        f = open('./audio.wav', 'wb')
+        print(type(f))
+        # s = sf.SoundFile(f)
+        # print('seconds = {}'.format(len(s) / s.samplerate))
+        f.close()
         return 'flaks test server'
+
 
     return app
