@@ -74,6 +74,7 @@ navigator.mediaDevices.getUserMedia(constraints).then(
             __log("Encoding complete");
             createDownloadLink(blob, recorder.encoding);
             encodingTypeSelect.disabled = false;
+            console.log(typeof(recorder.encoding));
         }
         recorder.setOptions({
             timeLimit: 120,
@@ -124,7 +125,7 @@ function createDownloadLink(blob, encoding) {
     au.controls = true;
     au.src = url; //link the a element to the blob 
     link.href = url;
-    link.download = new Date().toISOString() + '.' + encoding;
+    link.download = "audio"+ "." + encoding;
 
     link.innerHTML = link.download;
     //au is the wav file
@@ -132,7 +133,24 @@ function createDownloadLink(blob, encoding) {
     li.appendChild(au);
     li.appendChild(link); //add the li element to the ordered list 
     recordingsList.appendChild(li);
+
+    var form = new FormData();
+    form.append('wavefile', blob, "audiowav");
+
+    $(document).ready(function () {
+        $.ajax({
+          type: "POST",
+          contentType: false,
+          url: "http://127.0.0.1:5000/",
+          data: form,
+          processData: false
+        }).done(function(data) {
+          console.log(data);
+        });
+    });
+
 }
+
 
 //helper function
 function __log(e, data) {
