@@ -11,14 +11,8 @@ bp = Blueprint('analyzeAudio', __name__, url_prefix='/analyzeAudio')
 @bp.route('/', methods=['GET', 'POST', 'OPTIONS'])
 @crossdomain(origin='*')
 def analyzeAudio():
-    #b64data = request.form['data'].split('base64,')[1]
-    #binaryData = base64.b64decode(b64data)
-    with open("demo.wav", 'r') as infile:
-        for line in infile:
-            print(line)
-    return "ok"
-    # with open("audio.wav", 'w') as file:
-    #     file.write(binaryData)
+    with open('audio.wav', 'wb') as infile:
+        infile.write(request.data)
     src = sr.AudioFile('audio.wav')
     with src as source:
         audio = r.record(source)

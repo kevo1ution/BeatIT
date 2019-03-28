@@ -134,16 +134,18 @@ function createDownloadLink(blob, encoding) {
     li.appendChild(link); //add the li element to the ordered list 
     recordingsList.appendChild(li);
 
-    var form = new FormData();
-    form.append('wavefile', blob, "audiowav");
-
     $(document).ready(function () {
-        $.ajax({
-          type: "POST",
-          contentType: false,
-          url: "http://127.0.0.1:5000/",
-          data: form,
-          processData: false
+        //var form = new FormData();
+        //form.append('data', event.target.result);
+        //form.append('breathe', 'b')
+        //console.log(blob);
+        $.ajax({    
+            type: "POST",
+            //enctype: 'multipart/form-data',
+            contentType: false,
+            processData: false,
+            url: "http://127.0.0.1:5000/analyzeAudio/",
+            data: blob
         }).done(function(data) {
           console.log(data);
         });

@@ -29,8 +29,8 @@ def create_app(test_config=None):
     def hello():
         if request.method=='POST':
             print('post method')
-            audio = request.data
-            blob = open(audio).read() 
+        #    audio = request.data
+        #    blob = open(audio).read() 
 
         return 'flaks test server'
 
