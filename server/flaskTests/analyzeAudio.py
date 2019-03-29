@@ -5,6 +5,7 @@ from flask import (
 )
 import speech_recognition as sr
 import soundfile as sf
+import unirest
 r = sr.Recognizer()
 
 bp = Blueprint('analyzeAudio', __name__, url_prefix='/analyzeAudio')
@@ -25,5 +26,13 @@ def analyzeAudio():
             print("lyrics:{} ".format(text))
         except:
             print("didnt recognize")
+
+    response = unirest.post("https://macgyverapi-song-tempo-detection-v1.p.rapidapi.com/",
+      headers={
+        "X-RapidAPI-Key": "cbd1fb4709mshcb495d0b31992eap1fd72djsn9fe476ae8d17",
+        "Content-Type": "application/json"
+      },
+      params=("{\"id\":\"6t7s5d7t\",\"key\":\"free\",\"data\":{\"audio_file\":\"https://askmacgyver.com/test/Maroon-128.mp3\"}}")
+    )
     return('This is the analyze')
 
