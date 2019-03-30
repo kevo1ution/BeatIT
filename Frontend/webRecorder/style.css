@@ -7,6 +7,8 @@ a {
 }
 p {
   margin-top: 1rem;
+  position:relative;
+  text-align: center;
 }
 a:hover {
   color:#23527c;
@@ -17,11 +19,64 @@ a:visited {
 body {
   margin: 1rem;
   padding: 1rem;
-  font-family: sans-serif;
   max-width: 28rem;
   margin: 0 auto;
   position: relative;
+  
+  color: #fff;
+  background: linear-gradient(-90deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+  background-size: 3000% 2000%;
+  -webkit-animation: Gradient 15s ease infinite;
+  /*-moz-animation: Gradient 15s ease infinite;*/
+  animation: Gradient 15s ease infinite;
 }
+
+
+h1{
+  font-family: Open Sans;
+  font-weight: 300;
+  font-size: 1000;
+  text-align: center;
+  position: relative;
+
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 100%
+  }
+  50% {
+    background-position: 100% 0%
+  }
+  100% {
+    background-position: 0% 0%
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 100%
+  }
+  50% {
+    background-position: 100% 0%
+  }
+  100% {
+    background-position: 0% 0%
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 100%
+  }
+  50% {
+    background-position: 100% 0%
+  }
+  100% {
+    background-position: 0% 0%
+  }
+}
+
 #controls {
   display: flex;
   margin-top: 2rem;
@@ -40,7 +95,9 @@ button {
   justify-content: center;
   align-items: center;
   color:#ffffff;
-  font-weight: bold;
+  top
+  font-family: Open Sans;
+  font-weight: 400;
   font-size: 1rem;
 }
 button:hover, button:focus {
