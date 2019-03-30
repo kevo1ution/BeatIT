@@ -30,6 +30,7 @@ def analyzeAudio():
     src = sr.AudioFile('audio.wav')
     f = sf.SoundFile('audio.wav')
     print('seconds = {}'.format(len(f) / f.samplerate))
+    print('tempo = {}'.format(tempoJson))
     with src as source:
         audio = r.record(source)
         print(type(audio))
