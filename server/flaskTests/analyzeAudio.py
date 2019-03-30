@@ -10,7 +10,7 @@ r = sr.Recognizer()
 bp = Blueprint('analyzeAudio', __name__, url_prefix='/analyzeAudio')
 
 def getTempo(file): 
-    """ given a file, retrieves the tempo of the file from the sonicapi endpoint """ 
+    """ given an audio wav file, retrieves the tempo of the file from the sonicapi endpoint """ 
     files = {'input_file': open(file,'rb')}
     payload = {
         'access_id' : 'fcd97d07-bb10-439c-9f65-5f15f3b237dd', 
