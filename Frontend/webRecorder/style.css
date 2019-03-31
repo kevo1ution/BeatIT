@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
 * {
   padding: 0;
   margin: 0;
@@ -9,6 +11,9 @@ p {
   margin-top: 1rem;
   position:relative;
   text-align: center;
+  padding-top:100px;
+  font-family: Courier;
+  font-size: 1.2rem;
 }
 a:hover {
   color:#23527c;
@@ -22,59 +27,104 @@ body {
   max-width: 28rem;
   margin: 0 auto;
   position: relative;
-  
+  font-size: 400;
+ /* padding-top:300px;*/
   color: #fff;
-  background: linear-gradient(-90deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
-  background-size: 3000% 2000%;
-  -webkit-animation: Gradient 15s ease infinite;
-  /*-moz-animation: Gradient 15s ease infinite;*/
-  animation: Gradient 15s ease infinite;
+  /*background: linear-gradient(-90deg, #6D0BFB, #f40606, #FBDE0B, #f406d4);*/
+  background-image: url(dj.png);
+  /*background-position: center; */ /*if you want to see a different side to background uncomment this*/ 
+  width: 100%;
 }
 
 
-h1{
-  font-family: Open Sans;
+/*h1{
+  font-family: Courier;
   font-weight: 300;
-  font-size: 1000;
+  font-size: 60px;
   text-align: center;
   position: relative;
+  padding-top:100px;
 
+}*/
+
+
+svg {
+    /*position: absolute;*/
+    font: 15em 'Courier';
+    /*border: 3px solid #73AD21;*/
+    /*width:500px;*/
+    /*width:600px;*/
+/*    width: 700px;
+    height: 300px;*/
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
-@-webkit-keyframes Gradient {
-  0% {
-    background-position: 0% 100%
-  }
-  50% {
-    background-position: 100% 0%
-  }
-  100% {
-    background-position: 0% 0%
-  }
+.text-copy {
+    fill: none;
+    stroke: white;
+    stroke-dasharray: 6% 29%;
+    stroke-width: 10px;
+    stroke-dashoffset: 0%;
+    text-align: center;
+    animation: stroke-offset 6.5s infinite linear;
 }
 
-@-moz-keyframes Gradient {
-  0% {
-    background-position: 0% 100%
-  }
-  50% {
-    background-position: 100% 0%
-  }
-  100% {
-    background-position: 0% 0%
-  }
+.text-copy:nth-child(1){
+  stroke: #F2385A;
+  animation-delay: -1;
 }
 
-@keyframes Gradient {
-  0% {
-    background-position: 0% 100%
-  }
-  50% {
-    background-position: 100% 0%
-  }
-  100% {
-    background-position: 0% 0%
-  }
+.text-copy:nth-child(2){
+  stroke: #F5A503;
+  animation-delay: -2s;
+}
+
+.text-copy:nth-child(3){
+  stroke: #E9F1DF;
+  animation-delay: -3s;
+}
+
+.text-copy:nth-child(4){
+  stroke: #56D9CD;
+  animation-delay: -4s;
+}
+
+.text-copy:nth-child(5){
+  stroke: #86a565;
+  animation-delay: -5s;
+}
+.text-copy:nth-child(6){
+  stroke: #1dff00;
+  animation-delay: -6s;
+}
+.text-copy:nth-child(7){
+  stroke: #ef0000;
+  animation-delay: -7s;
+}
+
+@keyframes stroke-offset{
+  100% {stroke-dashoffset: -35%;}
+}
+
+#messenger {
+  position: absolute;
+  padding-top: 50px;
+  text-align: center;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: Courier;
+  font-size: 30px;
+  white-space: nowrap;
+  text-shadow: 0 2px 2px rgba(#000, 0.9);
+}
+
+h3{
+  font-family: Courier;
+  font-weight: 300;
+  text-align: center;
+  position: relative;
 }
 
 #controls {
@@ -87,7 +137,7 @@ button {
   min-width: 2rem;
   border: none;
   border-radius: 0.15rem;
-  background: #ed341d;
+  background: #0BFBDA;
   margin-left: 2px;
   box-shadow: inset 0 -0.15rem 0 rgba(0, 0, 0, 0.2);
   cursor: pointer;
@@ -95,10 +145,9 @@ button {
   justify-content: center;
   align-items: center;
   color:#ffffff;
-  top
-  font-family: Open Sans;
-  font-weight: 400;
-  font-size: 1rem;
+  font-family: Courier;
+  font-weight: 800;
+  font-size: 1.3rem;
 }
 button:hover, button:focus {
   outline: none;
@@ -126,6 +175,7 @@ audio {
 li {
   list-style: none;
   margin-bottom: 1rem;
+  font-family: Courier;
 }
 #formats {
   margin-top: 0.5rem;

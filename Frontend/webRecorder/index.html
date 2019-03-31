@@ -6,15 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300" type="text/css" />
-
   </head>
   <body>
-    <h1>DJ Beat IT</h1> 
+    <!-- <h1>MOSH BEATS</h1>  -->
+    <div text-alight = "center">
+        <svg viewBox="0 0 1300 500">
+            <symbol id="s-text">
+                <text text-anchor="middle" x="50%" y="80%">moshbeats</text>
+            </symbol>
+
+            <g class = "g-ants">
+                <use xlink:href="#s-text" class="text-copy"></use>
+                <use xlink:href="#s-text" class="text-copy"></use>
+                <use xlink:href="#s-text" class="text-copy"></use>
+                <use xlink:href="#s-text" class="text-copy"></use>
+                <use xlink:href="#s-text" class="text-copy"></use>
+            </g>
+        </svg>
+    </div>
+    
+
+    <div id="messenger"></div>
     <p>Convert recorded audio to:<br>
     <select id="encodingTypeSelect">
       <option value="wav">Waveform Audio (.wav)</option>
     </select>
     </p>
+    
     <div id="controls">
         <button id="recordButton">Record</button>
         <button id="stopButton" >Stop</button>
