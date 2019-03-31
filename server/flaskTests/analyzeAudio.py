@@ -6,16 +6,17 @@ from flask import (
 )
 import speech_recognition as sr
 import soundfile as sf
+import rap
 r = sr.Recognizer()
 
 bp = Blueprint('analyzeAudio', __name__, url_prefix='/analyzeAudio')
 
-def getTempo(file): 
-    """ given an audio wav file, retrieves the tempo of the file from the sonicapi endpoint """ 
+def getTempo(file):
+    """ given an audio wav file, retrieves the tempo of the file from the sonicapi endpoint """
     files = {'input_file': open(file,'rb')}
     payload = {
-        'access_id' : 'fcd97d07-bb10-439c-9f65-5f15f3b237dd', 
-        'blocking': 'true', 
+        'access_id' : 'fcd97d07-bb10-439c-9f65-5f15f3b237dd',
+        'blocking': 'true',
         'format': 'json'
     }
     resp = requests.post("https://api.sonicapi.com/analyze/tempo", data=payload, files=files)
@@ -30,7 +31,8 @@ def analyzeAudio():
     src = sr.AudioFile('audio.wav')
     f = sf.SoundFile('audio.wav')
     print('seconds = {}'.format(len(f) / f.samplerate))
-    print('tempo = {}'.format(tempoJson))
+    print('tempo = ', tempoJson['auftakt_result']['overall_tempo'])
+    rap.make_music(round(tempoJson['auftakt_result']['overall_tempo']))
     with src as source:
         audio = r.record(source)
         print(type(audio))
@@ -39,5 +41,5 @@ def analyzeAudio():
             print("lyrics:{} ".format(text))
         except:
             print("didnt recognize")
-    return('This is the analyze')
 
+    return('This is the analyze')

@@ -8,7 +8,6 @@ import base64 #put in analyzeaudio
 import wave #put in analyzeaudio
 
 
-
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -30,9 +29,7 @@ def create_app(test_config=None):
         if request.method=='POST':
             print('post method')
         #    audio = request.data
-        #    blob = open(audio).read() 
+        #    blob = open(audio).read()
 
-        return 'flaks test server'
-
-
+        return 'flask test server'
     return app
